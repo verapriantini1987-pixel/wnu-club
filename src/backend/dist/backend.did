@@ -1,0 +1,288 @@
+type WardInput = 
+ record {
+   name: text;
+   pickupDays: vec DayOfWeek;
+   pickupTime: text;
+   zone: text;
+ };
+type WardId = nat;
+type Ward = 
+ record {
+   createdAt: Timestamp;
+   id: WardId;
+   name: text;
+   pickupDays: vec DayOfWeek;
+   pickupTime: text;
+   zone: text;
+ };
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfileInput = 
+ record {
+   displayName: text;
+   phone: text;
+ };
+type UserProfile = 
+ record {
+   createdAt: int;
+   displayName: text;
+   phone: text;
+   "principal": principal;
+ };
+type Timestamp = int;
+type StopStatus = 
+ variant {
+   collected;
+   issueReported;
+   pending;
+   skipped;
+ };
+type StopId = nat;
+type StatusChange = 
+ record {
+   changedAt: Timestamp;
+   changedBy: principal;
+   note: text;
+   status: ReportStatus;
+ };
+type RouteSummary = 
+ record {
+   collected: nat;
+   issueReported: nat;
+   name: text;
+   pending: nat;
+   routeId: RouteId;
+   skipped: nat;
+   totalStops: nat;
+ };
+type RouteStop = 
+ record {
+   binId: opt BinId;
+   id: StopId;
+   note: text;
+   order: nat;
+   status: StopStatus;
+   stopLabel: text;
+   updatedAt: Timestamp;
+   wardId: WardId;
+ };
+type RouteStatus = 
+ variant {
+   active;
+   completed;
+   planned;
+ };
+type RouteInput = 
+ record {
+   collectionDays: vec DayOfWeek;
+   driver: opt principal;
+   name: text;
+   wardIds: vec WardId;
+ };
+type RouteId = nat;
+type Route = 
+ record {
+   collectionDays: vec DayOfWeek;
+   createdAt: Timestamp;
+   driver: opt principal;
+   id: RouteId;
+   name: text;
+   status: RouteStatus;
+   stops: vec RouteStop;
+   wardIds: vec WardId;
+ };
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type ReportStatus = 
+ variant {
+   acknowledged;
+   inProgress;
+   rejected;
+   resolved;
+   submitted;
+ };
+type ReportInput = 
+ record {
+   address: text;
+   category: ReportCategory;
+   description: text;
+   photo: opt text;
+   wardId: WardId;
+ };
+type ReportId = nat;
+type ReportFilter = 
+ record {
+   category: opt ReportCategory;
+   search: opt text;
+   status: opt ReportStatus;
+   wardId: opt WardId;
+ };
+type ReportDetail = 
+ record {
+   comments: vec Comment;
+   report: Report;
+   timeline: vec StatusChange;
+ };
+type ReportCategory = 
+ variant {
+   damagedBin;
+   illegalDumping;
+   missedPickup;
+   other;
+   overflowingBin;
+ };
+type Report = 
+ record {
+   address: text;
+   assignedRouteId: opt RouteId;
+   category: ReportCategory;
+   citizen: principal;
+   createdAt: Timestamp;
+   description: text;
+   id: ReportId;
+   photo: opt text;
+   status: ReportStatus;
+   updatedAt: Timestamp;
+   wardId: WardId;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type DayOfWeek = 
+ variant {
+   friday;
+   monday;
+   saturday;
+   sunday;
+   thursday;
+   tuesday;
+   wednesday;
+ };
+type DashboardStats = 
+ record {
+   activeRoutes: nat;
+   binsNeedingService: nat;
+   openReports: nat;
+   resolvedToday: nat;
+   totalReports: nat;
+ };
+type Comment = 
+ record {
+   author: principal;
+   body: text;
+   createdAt: Timestamp;
+   id: nat;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type BinStatus = 
+ variant {
+   needsService;
+   ok;
+   outOfService;
+ };
+type BinInput = 
+ record {
+   capacityLitres: nat;
+   location: text;
+   name: text;
+   wardId: WardId;
+ };
+type BinId = nat;
+type Bin = 
+ record {
+   capacityLitres: nat;
+   createdAt: Timestamp;
+   id: BinId;
+   lastServicedAt: opt Timestamp;
+   location: text;
+   name: text;
+   status: BinStatus;
+   wardId: WardId;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  addReportComment: (id: ReportId, body: text) -> (opt Comment);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  assignReportRoute: (id: ReportId, routeId: opt RouteId, note: text) ->
+   (opt Report);
+  createBin: (input: BinInput) -> (Bin);
+  createReport: (input: ReportInput) -> (Report);
+  createRoute: (input: RouteInput) -> (Route);
+  createWard: (input: WardInput) -> (Ward);
+  deleteBin: (id: BinId) -> (bool);
+  deleteRoute: (id: RouteId) -> (bool);
+  deleteWard: (id: WardId) -> (bool);
+  execute: (qJson: text) -> (Result) query;
+  getApiDoc: () -> (text) query;
+  getBin: (id: BinId) -> (opt Bin) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getDashboardStats: () -> (DashboardStats) query;
+  getMyProfile: () -> (opt UserProfile) query;
+  getReport: (id: ReportId) -> (opt ReportDetail) query;
+  getRoute: (id: RouteId) -> (opt Route) query;
+  getRouteSummary: (routeId: RouteId) -> (opt RouteSummary) query;
+  getWard: (id: WardId) -> (opt Ward) query;
+  isCallerAdmin: () -> (bool) query;
+  listBins: () -> (vec Bin) query;
+  listMyReports: () -> (vec Report) query;
+  listMyRoutes: () -> (vec Route) query;
+  listReports: (filter: ReportFilter) -> (vec Report) query;
+  listRoutes: () -> (vec Route) query;
+  listWards: () -> (vec Ward) query;
+  markStop: (routeId: RouteId, stopId: StopId, status: StopStatus, note:
+   text) -> (opt Route);
+  schema: () -> (text) query;
+  setBinStatus: (id: BinId, status: BinStatus) -> (opt Bin);
+  updateBin: (id: BinId, input: BinInput) -> (opt Bin);
+  updateReportStatus: (id: ReportId, status: ReportStatus, note: text) ->
+   (opt Report);
+  updateRoute: (id: RouteId, input: RouteInput) -> (opt Route);
+  updateWard: (id: WardId, input: WardInput) -> (opt Ward);
+  upsertMyProfile: (input: UserProfileInput) -> (UserProfile);
+}

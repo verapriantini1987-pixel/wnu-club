@@ -1,0 +1,265 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-display: "Space Grotesk", sans-serif;
+    --font-body: "Plus Jakarta Sans", sans-serif;
+    --font-mono: "Geist Mono", monospace;
+    --radius: 0.5rem;
+
+    /* Flash Peak Arena — dark-first, always dark */
+    --background: 0.14 0.035 264;
+    --foreground: 0.96 0.012 258;
+    --card: 0.19 0.045 264;
+    --card-foreground: 0.96 0.012 258;
+    --popover: 0.22 0.05 264;
+    --popover-foreground: 0.96 0.012 258;
+
+    /* Gold — the WNU CLUB signature */
+    --primary: 0.8 0.15 82;
+    --primary-foreground: 0.16 0.03 264;
+
+    --secondary: 0.24 0.05 264;
+    --secondary-foreground: 0.9 0.015 258;
+    --muted: 0.23 0.045 264;
+    --muted-foreground: 0.7 0.025 258;
+
+    /* Orange — secondary warm accent */
+    --accent: 0.72 0.18 52;
+    --accent-foreground: 0.15 0.03 52;
+
+    /* Biru dongker — electric navy for badges/metrics */
+    --cyan: 0.62 0.17 258;
+    --cyan-foreground: 0.97 0.01 258;
+
+    --success: 0.72 0.16 155;
+    --success-foreground: 0.15 0.03 155;
+    --warning: 0.82 0.16 85;
+    --warning-foreground: 0.18 0.03 85;
+
+    --destructive: 0.6 0.22 25;
+    --destructive-foreground: 0.98 0.005 25;
+
+    --border: 0.3 0.05 264;
+    --input: 0.3 0.05 264;
+    --ring: 0.8 0.15 82;
+
+    --chart-1: 0.8 0.15 82;
+    --chart-2: 0.72 0.18 52;
+    --chart-3: 0.62 0.17 258;
+    --chart-4: 0.72 0.16 155;
+    --chart-5: 0.7 0.14 320;
+
+    --sidebar: 0.17 0.04 264;
+    --sidebar-foreground: 0.93 0.012 258;
+    --sidebar-primary: 0.8 0.15 82;
+    --sidebar-primary-foreground: 0.16 0.03 264;
+    --sidebar-accent: 0.24 0.05 264;
+    --sidebar-accent-foreground: 0.9 0.015 258;
+    --sidebar-border: 0.28 0.05 264;
+    --sidebar-ring: 0.8 0.15 82;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.82 0.15 82) 0%,
+      oklch(0.72 0.18 52) 100%
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.19 0.045 264) 0%,
+      oklch(0.15 0.035 264) 100%
+    );
+    --gradient-text: linear-gradient(
+      110deg,
+      oklch(0.86 0.14 85) 0%,
+      oklch(0.78 0.17 62) 50%,
+      oklch(0.72 0.18 52) 100%
+    );
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 0.14 0.035 264;
+    --foreground: 0.96 0.012 258;
+    --card: 0.19 0.045 264;
+    --card-foreground: 0.96 0.012 258;
+    --popover: 0.22 0.05 264;
+    --popover-foreground: 0.96 0.012 258;
+
+    --primary: 0.8 0.15 82;
+    --primary-foreground: 0.16 0.03 264;
+
+    --secondary: 0.24 0.05 264;
+    --secondary-foreground: 0.9 0.015 258;
+    --muted: 0.23 0.045 264;
+    --muted-foreground: 0.7 0.025 258;
+
+    --accent: 0.72 0.18 52;
+    --accent-foreground: 0.15 0.03 52;
+
+    --cyan: 0.62 0.17 258;
+    --cyan-foreground: 0.97 0.01 258;
+
+    --success: 0.72 0.16 155;
+    --success-foreground: 0.15 0.03 155;
+    --warning: 0.82 0.16 85;
+    --warning-foreground: 0.18 0.03 85;
+
+    --destructive: 0.6 0.22 25;
+    --destructive-foreground: 0.98 0.005 25;
+
+    --border: 0.3 0.05 264;
+    --input: 0.3 0.05 264;
+    --ring: 0.8 0.15 82;
+
+    --chart-1: 0.8 0.15 82;
+    --chart-2: 0.72 0.18 52;
+    --chart-3: 0.62 0.17 258;
+    --chart-4: 0.72 0.16 155;
+    --chart-5: 0.7 0.14 320;
+
+    --sidebar: 0.17 0.04 264;
+    --sidebar-foreground: 0.93 0.012 258;
+    --sidebar-primary: 0.8 0.15 82;
+    --sidebar-primary-foreground: 0.16 0.03 264;
+    --sidebar-accent: 0.24 0.05 264;
+    --sidebar-accent-foreground: 0.9 0.015 258;
+    --sidebar-border: 0.28 0.05 264;
+    --sidebar-ring: 0.8 0.15 82;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@theme {
+  --color-background: oklch(var(--background));
+  --color-foreground: oklch(var(--foreground));
+  --color-card: oklch(var(--card));
+  --color-card-foreground: oklch(var(--card-foreground));
+  --color-primary: oklch(var(--primary));
+  --color-primary-foreground: oklch(var(--primary-foreground));
+  --color-secondary: oklch(var(--secondary));
+  --color-secondary-foreground: oklch(var(--secondary-foreground));
+  --color-muted: oklch(var(--muted));
+  --color-muted-foreground: oklch(var(--muted-foreground));
+  --color-accent: oklch(var(--accent));
+  --color-accent-foreground: oklch(var(--accent-foreground));
+  --color-cyan: oklch(var(--cyan));
+  --color-cyan-foreground: oklch(var(--cyan-foreground));
+  --color-success: oklch(var(--success));
+  --color-warning: oklch(var(--warning));
+  --color-destructive: oklch(var(--destructive));
+  --color-destructive-foreground: oklch(var(--destructive-foreground));
+  --color-border: oklch(var(--border));
+  --color-input: oklch(var(--input));
+  --color-ring: oklch(var(--ring));
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+  .bg-gradient-subtle {
+    background-image: var(--gradient-subtle);
+  }
+  .text-gradient {
+    background-image: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .shadow-elevated {
+    box-shadow: 0 1px 2px 0 oklch(0.1 0.03 264 / 0.5), 0 16px 40px -14px
+      oklch(0.1 0.03 264 / 0.7);
+  }
+  .shadow-subtle {
+    box-shadow: 0 1px 3px 0 oklch(0.1 0.03 264 / 0.4);
+  }
+  .shadow-gold {
+    box-shadow: 0 0 0 1px oklch(0.8 0.15 82 / 0.25), 0 8px 30px -10px
+      oklch(0.8 0.15 82 / 0.35);
+  }
+  .glass-panel {
+    background-color: oklch(var(--card) / 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid oklch(var(--border) / 0.8);
+  }
+  /* Flash Peak signature: layered navy depth + hex-grid texture */
+  .bg-arena {
+    background-color: oklch(var(--background));
+    background-image: radial-gradient(
+        ellipse 80% 50% at 50% -10%,
+        oklch(0.3 0.06 264 / 0.55),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 60% 45% at 85% 15%,
+        oklch(0.8 0.15 82 / 0.1),
+        transparent 65%
+      ),
+      linear-gradient(
+        180deg,
+        oklch(0.16 0.04 264) 0%,
+        oklch(0.13 0.03 264) 100%
+      );
+  }
+  .text-glow-gold {
+    text-shadow: 0 0 24px oklch(0.8 0.15 82 / 0.35);
+  }
+  .border-gold {
+    border-color: oklch(var(--primary) / 0.5);
+  }
+  .hex-grid {
+    background-image: repeating-linear-gradient(
+        60deg,
+        oklch(var(--primary) / 0.06) 0,
+        oklch(var(--primary) / 0.06) 1px,
+        transparent 1px,
+        transparent 22px
+      ),
+      repeating-linear-gradient(
+        -60deg,
+        oklch(var(--primary) / 0.06) 0,
+        oklch(var(--primary) / 0.06) 1px,
+        transparent 1px,
+        transparent 22px
+      );
+  }
+  .clip-notch {
+    clip-path: polygon(0 0, 100% 0, 100% 82%, 92% 100%, 0 100%);
+  }
+}

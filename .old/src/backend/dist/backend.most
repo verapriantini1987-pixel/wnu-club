@@ -1,0 +1,259 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__230067015<Principal, UserRole__91647283>
+  };
+type BinId__1061576982 = Nat;
+type BinStatus__186305851 = {#needsService; #ok; #outOfService};
+type BinStatus__405032033 = {#needsService; #ok; #outOfService};
+type Bin__469186862 =
+  {
+    capacityLitres : Nat;
+    createdAt : Timestamp__301639476;
+    id : BinId__1061576982;
+    lastServicedAt : ?Timestamp__301639476;
+    location : Text;
+    name : Text;
+    status : BinStatus__186305851;
+    wardId : WardId__688935991
+  };
+type Bin__684347432 =
+  {
+    capacityLitres : Nat;
+    createdAt : Int;
+    id : Nat;
+    lastServicedAt : ?Int;
+    location : Text;
+    name : Text;
+    status : BinStatus__405032033;
+    wardId : Nat
+  };
+type Comment__242050717 =
+  {
+    author : Principal;
+    body : Text;
+    createdAt : Timestamp__301639476;
+    id : Nat
+  };
+type Comment__99006812 =
+  {author : Principal; body : Text; createdAt : Int; id : Nat};
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type DayOfWeek__791624275 =
+  {#friday; #monday; #saturday; #sunday; #thursday; #tuesday; #wednesday};
+type DayOfWeek__841053611 =
+  {#friday; #monday; #saturday; #sunday; #thursday; #tuesday; #wednesday};
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type List__355132335<T> =
+  {
+    var blockIndex : Nat__227979830;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__227979830
+  };
+type List__836382695<T> = List__355132335<T>;
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type Nat__227979830 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__660689200 =
+  {
+    accessControlState : AccessControlState__201339279;
+    binState : {var nextBinId : Nat};
+    bins : Map__230067015<Nat, Bin__684347432>;
+    profiles : Map__230067015<Principal, UserProfile__478559981>;
+    reportComments : Map__230067015<Nat, List__836382695<Comment__99006812>>;
+    reportState : {var nextCommentId : Nat; var nextReportId : Nat};
+    reportTimelines :
+      Map__230067015<Nat, List__836382695<StatusChange__316890511>>;
+    reports : Map__230067015<Nat, Report__462406055>;
+    routeState : {var nextRouteId : Nat; var nextStopId : Nat};
+    routes : Map__230067015<Nat, Route__512119793>;
+    wardState : {var nextWardId : Nat};
+    wards : Map__230067015<Nat, Ward__325969869>
+  };
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type OldActor__1015423726 = {};
+type ReportCategory__610044669 =
+  {#damagedBin; #illegalDumping; #missedPickup; #other; #overflowingBin};
+type ReportCategory__869201917 =
+  {#damagedBin; #illegalDumping; #missedPickup; #other; #overflowingBin};
+type ReportId__327116113 = Nat;
+type ReportStatus__1016174028 =
+  {#acknowledged; #inProgress; #rejected; #resolved; #submitted};
+type ReportStatus__268462423 =
+  {#acknowledged; #inProgress; #rejected; #resolved; #submitted};
+type Report__462406055 =
+  {
+    address : Text;
+    assignedRouteId : ?Nat;
+    category : ReportCategory__869201917;
+    citizen : Principal;
+    createdAt : Int;
+    description : Text;
+    id : Nat;
+    photo : ?Text;
+    status : ReportStatus__1016174028;
+    updatedAt : Int;
+    wardId : Nat
+  };
+type Report__953667835 =
+  {
+    address : Text;
+    assignedRouteId : ?RouteId__594135611;
+    category : ReportCategory__610044669;
+    citizen : Principal;
+    createdAt : Timestamp__301639476;
+    description : Text;
+    id : ReportId__327116113;
+    photo : ?Text;
+    status : ReportStatus__268462423;
+    updatedAt : Timestamp__301639476;
+    wardId : WardId__688935991
+  };
+type RouteId__594135611 = Nat;
+type RouteStatus__868898647 = {#active; #completed; #planned};
+type RouteStatus__923947803 = {#active; #completed; #planned};
+type RouteStop__235881529 =
+  {
+    binId : ?Nat;
+    id : Nat;
+    note : Text;
+    order : Nat;
+    status : StopStatus__431667239;
+    stopLabel : Text;
+    updatedAt : Int;
+    wardId : Nat
+  };
+type RouteStop__637969224 =
+  {
+    binId : ?BinId__1061576982;
+    id : StopId__1028453958;
+    note : Text;
+    order : Nat;
+    status : StopStatus__316541485;
+    stopLabel : Text;
+    updatedAt : Timestamp__301639476;
+    wardId : WardId__688935991
+  };
+type Route__359719741 =
+  {
+    collectionDays : [DayOfWeek__791624275];
+    createdAt : Timestamp__301639476;
+    driver : ?Principal;
+    id : RouteId__594135611;
+    name : Text;
+    status : RouteStatus__923947803;
+    stops : [RouteStop__637969224];
+    wardIds : [WardId__688935991]
+  };
+type Route__512119793 =
+  {
+    collectionDays : [DayOfWeek__841053611];
+    createdAt : Int;
+    driver : ?Principal;
+    id : Nat;
+    name : Text;
+    status : RouteStatus__868898647;
+    stops : [RouteStop__235881529];
+    wardIds : [Nat]
+  };
+type StatusChange__1028443727 =
+  {
+    changedAt : Timestamp__301639476;
+    changedBy : Principal;
+    note : Text;
+    status : ReportStatus__268462423
+  };
+type StatusChange__316890511 =
+  {
+    changedAt : Int;
+    changedBy : Principal;
+    note : Text;
+    status : ReportStatus__1016174028
+  };
+type StopId__1028453958 = Nat;
+type StopStatus__316541485 = {#collected; #issueReported; #pending; #skipped};
+type StopStatus__431667239 = {#collected; #issueReported; #pending; #skipped};
+type Timestamp__301639476 = Int;
+type UserProfile__277265826 =
+  {createdAt : Int; displayName : Text; phone : Text; principal : Principal};
+type UserProfile__478559981 =
+  {createdAt : Int; displayName : Text; phone : Text; principal : Principal};
+type UserRole__91647283 = {#admin; #guest; #user};
+type WardId__688935991 = Nat;
+type Ward__325969869 =
+  {
+    createdAt : Int;
+    id : Nat;
+    name : Text;
+    pickupDays : [DayOfWeek__841053611];
+    pickupTime : Text;
+    zone : Text
+  };
+type Ward__6403242 =
+  {
+    createdAt : Timestamp__301639476;
+    id : WardId__688935991;
+    name : Text;
+    pickupDays : [DayOfWeek__791624275];
+    pickupTime : Text;
+    zone : Text
+  };
+{
+  "20261009_120000" : OldActor__1015423726 -> NewActor__660689200
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__230067015<Principal, UserRole__91647283>
+    };
+  stable binState : {var nextBinId : Nat};
+  stable bins :
+    {
+      var root : Node__204828119<BinId__1061576982, Bin__469186862>;
+      var size : Nat__227979830
+    };
+  stable profiles :
+    {
+      var root : Node__204828119<Principal, UserProfile__277265826>;
+      var size : Nat__227979830
+    };
+  stable reportComments :
+    {
+      var root :
+        Node__204828119<ReportId__327116113,
+                         List__836382695<Comment__242050717>>;
+      var size : Nat__227979830
+    };
+  stable reportState : {var nextCommentId : Nat; var nextReportId : Nat};
+  stable reportTimelines :
+    {
+      var root :
+        Node__204828119<ReportId__327116113,
+                         List__836382695<StatusChange__1028443727>>;
+      var size : Nat__227979830
+    };
+  stable reports :
+    {
+      var root : Node__204828119<ReportId__327116113, Report__953667835>;
+      var size : Nat__227979830
+    };
+  stable routeState : {var nextRouteId : Nat; var nextStopId : Nat};
+  stable routes :
+    {
+      var root : Node__204828119<RouteId__594135611, Route__359719741>;
+      var size : Nat__227979830
+    };
+  stable wardState : {var nextWardId : Nat};
+  stable wards :
+    {
+      var root : Node__204828119<WardId__688935991, Ward__6403242>;
+      var size : Nat__227979830
+    }
+};
